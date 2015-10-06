@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.PaymentTransactions
 {
     class CapturePreviouslyAuthorizedAmount
     {
         /// <summary>
         /// Capture a Transaction Previously Submitted Via CaptureOnly
         /// </summary>
-        /// <param name="ApiLoginID">Your ApiLoginID</param>
-        /// <param name="ApiTransactionKey">Your ApiTransactionKey</param>
-        /// <param name="TransactionAmount">The amount submitted with CaptureOnly</param>
-        /// <param name="TransactionID">The TransactionID of the previous CaptureOnly operation</param>
-        public static void Run(String ApiLoginID, String ApiTransactionKey, decimal TransactionAmount, string TransactionID)
+        /// <param name="apiLoginId">Your ApiLoginID</param>
+        /// <param name="apiTransactionKey">Your ApiTransactionKey</param>
+        /// <param name="transactionAmount">The amount submitted with CaptureOnly</param>
+        /// <param name="transactionId">The TransactionID of the previous CaptureOnly operation</param>
+        public static void Run(string apiLoginId, string apiTransactionKey, decimal transactionAmount, string transactionId)
         {
             Console.WriteLine("Capture Previously Authorized Amount");
 
@@ -26,9 +23,9 @@ namespace net.authorize.sample
             // define the merchant information (authentication / transaction id)
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = ApiLoginID,
+                name = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = ApiTransactionKey
+                Item = apiTransactionKey
             };
 
             var creditCard = new creditCardType
@@ -44,8 +41,8 @@ namespace net.authorize.sample
             {
                 transactionType = transactionTypeEnum.priorAuthCaptureTransaction.ToString(),    // capture prior only
                 payment     = paymentType,
-                amount      = TransactionAmount,
-                refTransId  = TransactionID
+                amount      = transactionAmount,
+                refTransId  = transactionId
             };
 
             var request = new createTransactionRequest { transactionRequest = transactionRequest };

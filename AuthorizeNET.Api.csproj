@@ -7,8 +7,8 @@
     <ProjectGuid>{EE8CB03C-AFF3-4480-AFD5-1C8B51540570}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>net.authorize.sample</RootNamespace>
-    <AssemblyName>SampleCode</AssemblyName>
+    <RootNamespace>AuthorizeNET</RootNamespace>
+    <AssemblyName>AuthorizeNET</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -72,17 +72,17 @@
     <Compile Include="PaymentTransactions\DebitBankAccount.cs" />
     <Compile Include="PaymentTransactions\RefundTransaction.cs" />
     <Compile Include="PaymentTransactions\VoidTransaction.cs" />
-    <Compile Include="PayPalExpress\PayPalAuthorizeOnlyContinue.cs" />
-    <Compile Include="PayPalExpress\PayPalAuthorizeCapture.cs" />
-    <Compile Include="PayPalExpress\PayPalAuthorizeCaptureContinue.cs" />
-    <Compile Include="PayPalExpress\PayPalAuthorizeOnly.cs" />
-    <Compile Include="PayPalExpress\PayPalCredit.cs" />
-    <Compile Include="PayPalExpress\PayPalGetDetails.cs" />
-    <Compile Include="PayPalExpress\PayPalPriorAuthorizationCapture.cs" />
-    <Compile Include="PayPalExpress\PayPalVoid.cs" />
+    <Compile Include="PaypalExpressCheckout\AuthorizationAndCapture.cs" />
+    <Compile Include="PaypalExpressCheckout\AuthorizationOnly.cs" />
+    <Compile Include="PaypalExpressCheckout\AuthorizationOnlyContinued.cs" />
+    <Compile Include="PaypalExpressCheckout\AuthorizeAndCaptureContinue.cs" />
+    <Compile Include="PaypalExpressCheckout\Credit.cs" />
+    <Compile Include="PaypalExpressCheckout\GetDetails.cs" />
+    <Compile Include="PaypalExpressCheckout\PriorAuthorizationCapture.cs" />
+    <Compile Include="PaypalExpressCheckout\Void.cs" />
     <Compile Include="RecurringBilling\CancelSubscription.cs" />
     <Compile Include="RecurringBilling\CreateSubscription.cs" />
-    <Compile Include="RecurringBilling\GetListSubscription.cs" />
+    <Compile Include="RecurringBilling\GetListOfSubscriptions.cs" />
     <Compile Include="RecurringBilling\GetSubscriptionStatus.cs" />
     <Compile Include="RecurringBilling\UpdateSubscription.cs" />
     <Compile Include="SampleCode.cs" />

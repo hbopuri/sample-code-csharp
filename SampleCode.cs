@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AuthorizeNET.CustomerProfiles;
+using AuthorizeNET.PaymentTransactions;
+using AuthorizeNET.PaypalExpressCheckout;
+using AuthorizeNET.RecurringBilling;
+using AuthorizeNET.TransactionReporting;
+using AuthorizeNET.VisaCheckout;
 
-namespace net.authorize.sample
+namespace AuthorizeNET
 {
     //===============================================================================================
     //
@@ -62,68 +65,75 @@ namespace net.authorize.sample
 
         private static void ShowMethods()
         {
-            
-            Console.WriteLine("    ChargeCreditCard");
-            Console.WriteLine("    CaptureOnly");
-            Console.WriteLine("    AuthorizeCreditCard");
-            Console.WriteLine("    CapturePreviouslyAuthorizedAmount");
-            Console.WriteLine("    CaptureFundsAuthorizedThroughAnotherChannel");
-            Console.WriteLine("    Refund");
-            Console.WriteLine("    Void");
-            Console.WriteLine("    DebitBankAccount");
-            Console.WriteLine("    CreditBankAccount");
-            Console.WriteLine("    ChargeCustomerProfile");
-            Console.WriteLine("    ChargeTokenizedCard");
-            Console.WriteLine("    CreateAnApplePayTransaction");
-            Console.WriteLine("    DecryptVisaCheckoutData");
-            Console.WriteLine("    CreateVisaCheckoutTransaction");
-            Console.WriteLine("    PayPalVoid");
-            Console.WriteLine("    PayPalAuthorizeCapture");
-            Console.WriteLine("    PayPalAuthorizeCaptureContinue");
-            Console.WriteLine("    PayPalAuthorizeOnly");
-            Console.WriteLine("    PayPalCredit");
-            Console.WriteLine("    PayPalGetDetails");
-            Console.WriteLine("    PayPalPriorAuthorizationCapture");
-            Console.WriteLine("    CancelSubscription");
-            Console.WriteLine("    CreateSubscription");
-            Console.WriteLine("    GetSubscriptionList");
-            Console.WriteLine("    GetSubscriptionStatus");
-            Console.WriteLine("    GetUnsettledTransactionList");
-            Console.WriteLine("    UpdateSubscription");
-            Console.WriteLine("    CreateCustomerProfile");
-            Console.WriteLine("    CreateCustomerPaymentProfile");
-            Console.WriteLine("    CreateCustomerShippingAddress");
-            Console.WriteLine("    DeleteCustomerProfile");
-            Console.WriteLine("    DeleteCustomerPaymentProfile");
-            Console.WriteLine("    DeleteCustomerShippingAddress");
-            Console.WriteLine("    ValidateCustomerPaymentProfile");
-            Console.WriteLine("    UpdateCustomerShippingAddress");
-            Console.WriteLine("    UpdateCustomerProfile");
-            Console.WriteLine("    UpdateCustomerPaymentProfile");
-            Console.WriteLine("    GetCustomerShippingAddress");
-            Console.WriteLine("    GetCustomerProfileId");
-            Console.WriteLine("    GetCustomerProfile");
-            Console.WriteLine("    GetCustomerPaymentProfile");
-            Console.WriteLine("    DeleteCustomerShippingAddress");
-            Console.WriteLine("    DeleteCustomerProfile");
-            Console.WriteLine("    DeleteCustomerPaymentProfile");
-            Console.WriteLine("    CreateCustomerShippingAddress");
-            Console.WriteLine("    CreateCustomerProfileFromTransaction");
-            Console.WriteLine("    GetBatchStatistics");
-            Console.WriteLine("    GetSettledBatchList");
-            Console.WriteLine("    GetTransactionDetails");
-            Console.WriteLine("    GetTransactionList");
+            var methodTypes = GetMethodTypes();
+            methodTypes.ForEach(x=> Console.WriteLine($"\t{x}"));
         }
 
-        private static void RunMethod(String methodName)
+        private static List<string> GetMethodTypes()
+        {
+            List<string> methodTypes = new List<string>();
+            methodTypes.Add("ChargeCreditCard");
+            methodTypes.Add("CaptureOnly");
+            methodTypes.Add("AuthorizeCreditCard");
+            methodTypes.Add("CapturePreviouslyAuthorizedAmount");
+            methodTypes.Add("CaptureFundsAuthorizedThroughAnotherChannel");
+            methodTypes.Add("Refund");
+            methodTypes.Add("Void");
+            methodTypes.Add("DebitBankAccount");
+            methodTypes.Add("CreditBankAccount");
+            methodTypes.Add("ChargeCustomerProfile");
+            methodTypes.Add("ChargeTokenizedCard");
+            methodTypes.Add("CreateAnApplePayTransaction");
+            methodTypes.Add("DecryptVisaCheckoutData");
+            methodTypes.Add("CreateVisaCheckoutTransaction");
+            methodTypes.Add("PayPalVoid");
+            methodTypes.Add("PayPalAuthorizeCapture");
+            methodTypes.Add("PayPalAuthorizeCaptureContinue");
+            methodTypes.Add("PayPalAuthorizeOnly");
+            methodTypes.Add("PayPalCredit");
+            methodTypes.Add("PayPalGetDetails");
+            methodTypes.Add("PayPalPriorAuthorizationCapture");
+            methodTypes.Add("CancelSubscription");
+            methodTypes.Add("CreateSubscription");
+            methodTypes.Add("GetSubscriptionList");
+            methodTypes.Add("GetSubscriptionStatus");
+            methodTypes.Add("GetUnsettledTransactionList");
+            methodTypes.Add("UpdateSubscription");
+            methodTypes.Add("CreateCustomerProfile");
+            methodTypes.Add("CreateCustomerPaymentProfile");
+            methodTypes.Add("CreateCustomerShippingAddress");
+            methodTypes.Add("DeleteCustomerProfile");
+            methodTypes.Add("DeleteCustomerPaymentProfile");
+            methodTypes.Add("DeleteCustomerShippingAddress");
+            methodTypes.Add("ValidateCustomerPaymentProfile");
+            methodTypes.Add("UpdateCustomerShippingAddress");
+            methodTypes.Add("UpdateCustomerProfile");
+            methodTypes.Add("UpdateCustomerPaymentProfile");
+            methodTypes.Add("GetCustomerShippingAddress");
+            methodTypes.Add("GetCustomerProfileId");
+            methodTypes.Add("GetCustomerProfile");
+            methodTypes.Add("GetCustomerPaymentProfile");
+            methodTypes.Add("DeleteCustomerShippingAddress");
+            methodTypes.Add("DeleteCustomerProfile");
+            methodTypes.Add("DeleteCustomerPaymentProfile");
+            methodTypes.Add("CreateCustomerShippingAddress");
+            methodTypes.Add("CreateCustomerProfileFromTransaction");
+            methodTypes.Add("GetBatchStatistics");
+            methodTypes.Add("GetSettledBatchList");
+            methodTypes.Add("GetTransactionDetails");
+            methodTypes.Add("GetTransactionList");
+            return methodTypes;
+        }
+
+        private static void RunMethod(string methodName)
         {
             // These are default transaction keys.
             // You can create your own keys in seconds by signing up for a sandbox account here: https://developer.authorize.net/sandbox/
-            String apiLoginId           = "5KP3u95bQpv";
-            String transactionKey       = "4Ktq966gC55GAX7S";
+            string apiLoginId = "5KP3u95bQpv";
+            string transactionKey = "4Ktq966gC55GAX7S";
 
-            string TransactionAmount        = string.Empty;
-            string TransactionID            = string.Empty;
+            string transactionAmount;
+            string transactionId = string.Empty;
 
             switch (methodName)
             {
@@ -189,12 +199,12 @@ namespace net.authorize.sample
                     break;
                 case "CapturePreviouslyAuthorizedAmount":
                     Console.WriteLine("Enter An Transaction Amount");
-                    TransactionAmount = Console.ReadLine();
+                    transactionAmount = Console.ReadLine();
 
                     Console.WriteLine("Enter An Transaction ID");
-                    TransactionID = Console.ReadLine();
+                    transactionId = Console.ReadLine();
 
-                    CapturePreviouslyAuthorizedAmount.Run(apiLoginId, transactionKey, Convert.ToDecimal( TransactionAmount ), TransactionID);
+                    CapturePreviouslyAuthorizedAmount.Run(apiLoginId, transactionKey, Convert.ToDecimal( transactionAmount ), transactionId);
                     break;
                 case "CaptureFundsAuthorizedThroughAnotherChannel":
                     CaptureFundsAuthorizedThroughAnotherChannel.Run(apiLoginId, transactionKey);
@@ -204,27 +214,27 @@ namespace net.authorize.sample
                     break;
                 case "Refund":
                     Console.WriteLine("Enter An Transaction Amount");
-                    TransactionAmount = Console.ReadLine();
+                    transactionAmount = Console.ReadLine();
 
                     Console.WriteLine("Enter An Transaction ID");
-                    TransactionID = Console.ReadLine();
+                    transactionId = Console.ReadLine();
 
-                    RefundTransaction.Run(apiLoginId, transactionKey, Convert.ToDecimal( TransactionAmount ), TransactionID);
+                    RefundTransaction.Run(apiLoginId, transactionKey, Convert.ToDecimal( transactionAmount ), transactionId);
                     break;
                 case "Void":
                     Console.WriteLine("Enter An Transaction ID");
-                    TransactionID = Console.ReadLine();
+                    transactionId = Console.ReadLine();
 
-                    VoidTransaction.Run(apiLoginId, transactionKey, TransactionID);
+                    VoidTransaction.Run(apiLoginId, transactionKey, transactionId);
                     break;
                 case "DebitBankAccount":
                     DebitBankAccount.Run(apiLoginId, transactionKey);
                     break;
                 case "CreditBankAccount":
                     Console.WriteLine("Enter An Transaction ID");
-                    TransactionID = Console.ReadLine();
+                    transactionId = Console.ReadLine();
 
-                    CreditBankAccount.Run(apiLoginId, transactionKey, TransactionID);
+                    CreditBankAccount.Run(apiLoginId, transactionKey, transactionId);
                     break;
                 case "ChargeCustomerProfile":
                     ChargeCustomerProfile.Run(apiLoginId, transactionKey);
@@ -233,28 +243,28 @@ namespace net.authorize.sample
                     ChargeTokenizedCreditCard.Run(apiLoginId, transactionKey);
                     break;
                 case "PayPalVoid":
-                    PayPalVoid.Run(apiLoginId, transactionKey, TransactionID);
+                    PayPalVoid.Run(apiLoginId, transactionKey, transactionId);
                     break;
                 case "PayPalAuthorizeCapture":
                     PayPalAuthorizeCapture.Run(apiLoginId, transactionKey);
                     break;
                 case "PayPalAuthorizeCaptureContinue":
-                    PayPalAuthorizeCaptureContinue.Run(apiLoginId, transactionKey, TransactionID);
+                    PayPalAuthorizeCaptureContinue.Run(apiLoginId, transactionKey, transactionId);
                     break;
                 case "PayPalAuthorizeOnly":
                     PayPalAuthorizeOnly.Run(apiLoginId, transactionKey);
                     break;
                 case "PayPalAuthorizeOnlyContinue":
-                    PayPalAuthorizeCaptureContinue.Run(apiLoginId, transactionKey, TransactionID);
+                    PayPalAuthorizeCaptureContinue.Run(apiLoginId, transactionKey, transactionId);
                     break;
                 case "PayPalCredit":
-                    PayPalCredit.Run(apiLoginId, transactionKey, TransactionID);
+                    PayPalCredit.Run(apiLoginId, transactionKey, transactionId);
                     break;
                 case "PayPalGetDetails":
-                    PayPalGetDetails.Run(apiLoginId, transactionKey, TransactionID);
+                    PayPalGetDetails.Run(apiLoginId, transactionKey, transactionId);
                     break;
                 case "PayPalPriorAuthorizationCapture":
-                    PayPalPriorAuthorizationCapture.Run(apiLoginId, transactionKey, TransactionID);
+                    PayPalPriorAuthorizationCapture.Run(apiLoginId, transactionKey, transactionId);
                     break;
                 case "CancelSubscription":
                     CancelSubscription.Run(apiLoginId, transactionKey);

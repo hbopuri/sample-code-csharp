@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.RecurringBilling
 {
     class CreateSubscription
     {
-        public static void Run(String ApiLoginID, String ApiTransactionKey)
+        public static void Run(string apiLoginId, string apiTransactionKey)
         {
             Console.WriteLine("Create Subscription Sample");
 
@@ -18,9 +15,9 @@ namespace net.authorize.sample
 
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name            = ApiLoginID,
+                name            = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item            = ApiTransactionKey,
+                Item            = apiTransactionKey,
             };
 
             paymentScheduleTypeInterval interval = new paymentScheduleTypeInterval();
@@ -72,14 +69,15 @@ namespace net.authorize.sample
             //validate
             if (response != null && response.messages.resultCode == messageTypeEnum.Ok)
             {
-                if (response != null && response.messages.message != null)
+                if (response.messages.message != null)
                 {
-                    Console.WriteLine("Success, Subscription ID : " + response.subscriptionId.ToString());
+                    Console.WriteLine("Success, Subscription ID : " + response.subscriptionId);
                 }
             }
             else
             {
-                Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
+                if (response != null)
+                    Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
             }
 
         }

@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.PaymentTransactions
 {
     class AuthorizeCreditCard
     {
-        public static void Run(String ApiLoginID, String ApiTransactionKey)
+        public static void Run(string apiLoginId, string apiTransactionKey)
         {
             Console.WriteLine("Authorize Credit Card Sample");
 
@@ -19,9 +16,9 @@ namespace net.authorize.sample
             // define the merchant information (authentication / transaction id)
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = ApiLoginID,
+                name = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = ApiTransactionKey,
+                Item = apiTransactionKey,
             };
 
             var creditCard = new creditCardType

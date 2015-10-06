@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.CustomerProfiles
 {
     class CreateCustomerProfileFromTransaction
     {
-        public static void Run(string ApiLoginID, string ApiTransactionKey)
+        public static void Run(string apiLoginId, string apiTransactionKey)
         {
             Console.WriteLine("CreateCustomerProfileFromTransaction Sample");
 
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name            = ApiLoginID,
+                name            = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item            = ApiTransactionKey,
+                Item            = apiTransactionKey,
             };
 
             var request = new createCustomerProfileFromTransactionRequest { transId = "2238147175" };
@@ -30,7 +29,7 @@ namespace net.authorize.sample
             //validate
             if (response != null && response.messages.resultCode == messageTypeEnum.Ok)
             {
-                if (response != null && response.messages.message != null)
+                if (response.messages.message != null)
                 {
                     Console.WriteLine("Success, CustomerProfileID : " + response.customerProfileId);
                     Console.WriteLine("Success, CustomerPaymentProfileID : " + response.customerPaymentProfileIdList[0]);
@@ -39,7 +38,8 @@ namespace net.authorize.sample
             }
             else
             {
-                Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
+                if (response != null)
+                    Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
             }
 
         }

@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AuthorizeNet.Api.Contracts.V1;
 using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.CustomerProfiles
 {
     class UpdateCustomerProfile
     {
-        public static void Run(String ApiLoginID, String ApiTransactionKey)
+        public static void Run(string apiLoginId, string apiTransactionKey)
         {
             Console.WriteLine("Update customer profile sample");
 
@@ -19,9 +15,9 @@ namespace net.authorize.sample
             // define the merchant information (authentication / transaction id)
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = ApiLoginID,
+                name = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = ApiTransactionKey,
+                Item = apiTransactionKey,
             };
 
             var profile = new customerProfileExType

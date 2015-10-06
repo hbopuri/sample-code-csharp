@@ -1,25 +1,21 @@
-﻿using AuthorizeNet.Api.Contracts.V1;
+﻿using System;
+using AuthorizeNet.Api.Contracts.V1;
 using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.VisaCheckout
 {
     class CreateVisaCheckoutTransaction
     {
-        public static void Run(String ApiLoginID, String ApiTransactionKey)
+        public static void Run(string apiLoginId, string apiTransactionKey)
         {
             Console.WriteLine("Running VisaCheckoutTransaction Sample ...");
             // The test setup.
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = ApiLoginID,
+                name = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = ApiTransactionKey,
+                Item = apiTransactionKey,
             };
 
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;

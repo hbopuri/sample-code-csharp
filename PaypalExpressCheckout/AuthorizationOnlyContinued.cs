@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.PaypalExpressCheckout
 {
     class PayPalAuthorizeOnlyContinue
     {
-        public static void Run(String ApiLoginID, String ApiTransactionKey, string TransactionID, string PayerID)
+        public static void Run(string apiLoginId, string apiTransactionKey, string transactionId, string payerId)
         {
             Console.WriteLine("PayPal Authorize Only-Continue Transaction");
 
@@ -19,16 +16,16 @@ namespace net.authorize.sample
             // define the merchant information (authentication / transaction id)
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = ApiLoginID,
+                name = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = ApiTransactionKey
+                Item = apiTransactionKey
             };
 
             var payPalType = new payPalType
             {
                 cancelUrl = "http://www.merchanteCommerceSite.com/Success/TC25262",
                 successUrl = "http://www.merchanteCommerceSite.com/Success/TC25262",     // the url where the user will be returned to
-                payerID    = PayerID
+                payerID    = payerId
             };
 
             //standard api call to retrieve response
@@ -39,7 +36,7 @@ namespace net.authorize.sample
                 transactionType = transactionTypeEnum.authOnlyContinueTransaction.ToString(),    // capture the card only
                 payment = paymentType,
                 amount = 19.45m,
-                refTransId = TransactionID,
+                refTransId = transactionId,
             };
 
             var request = new createTransactionRequest { transactionRequest = transactionRequest };

@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.PaypalExpressCheckout
 {
     class PayPalPriorAuthorizationCapture
     {
-        public static void Run(String ApiLoginID, String ApiTransactionKey, string TransactionID)
+        public static void Run(string apiLoginId, string apiTransactionKey, string transactionId)
         {
             Console.WriteLine("PayPal Prior Authorization Transaction");
 
@@ -19,9 +16,9 @@ namespace net.authorize.sample
             // define the merchant information (authentication / transaction id)
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = ApiLoginID,
+                name = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = ApiTransactionKey
+                Item = apiTransactionKey
             };
 
             var payPalType = new payPalType
@@ -38,7 +35,7 @@ namespace net.authorize.sample
                 transactionType = transactionTypeEnum.priorAuthCaptureTransaction.ToString(),    // capture a prior authorization
                 payment     = paymentType,
                 amount      = 19.45m,
-                refTransId  = TransactionID                                                     // the TransID value that was returned from the first AuthOnlyTransaction call
+                refTransId  = transactionId                                                     // the TransID value that was returned from the first AuthOnlyTransaction call
             };
 
             var request = new createTransactionRequest { transactionRequest = transactionRequest };

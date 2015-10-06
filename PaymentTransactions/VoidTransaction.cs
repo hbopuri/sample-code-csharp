@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.PaymentTransactions
 {
     class VoidTransaction
     {
-        public static void Run(String ApiLoginID, String ApiTransactionKey, string TransactionID)
+        public static void Run(string apiLoginId, string apiTransactionKey, string transactionId)
         {
             Console.WriteLine("Void Transaction");
 
@@ -19,9 +16,9 @@ namespace net.authorize.sample
             // define the merchant information (authentication / transaction id)
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = ApiLoginID,
+                name = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = ApiTransactionKey
+                Item = apiTransactionKey
             };
 
             var creditCard = new creditCardType
@@ -37,7 +34,7 @@ namespace net.authorize.sample
             {
                 transactionType = transactionTypeEnum.voidTransaction.ToString(),    // refund type
                 payment         = paymentType,
-                refTransId      = TransactionID
+                refTransId      = transactionId
             };
 
             var request = new createTransactionRequest { transactionRequest = transactionRequest };

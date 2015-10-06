@@ -1,25 +1,22 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.RecurringBilling
 {
     class UpdateSubscription
     {
-        public static void Run(string ApiLoginID, string ApiTransactionKey)
+        public static void Run(string apiLoginId, string apiTransactionKey)
         {
             Console.WriteLine("Update Subscription Sample");
 
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = ApiLoginID,
+                name = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = ApiTransactionKey,
+                Item = apiTransactionKey,
             };
 
             paymentScheduleType schedule = new paymentScheduleType
@@ -63,14 +60,15 @@ namespace net.authorize.sample
             //validate
             if (response != null && response.messages.resultCode == messageTypeEnum.Ok)
             {
-                if (response != null && response.messages.message != null)
+                if (response.messages.message != null)
                 {
                     Console.WriteLine("Success, RefID Code : " + response.refId);
                 }
             }
             else
             {
-                Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
+                if (response != null)
+                    Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
             }
 
         }

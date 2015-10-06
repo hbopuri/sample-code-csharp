@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.RecurringBilling
 {
     class GetListSubscriptions
     {
-        public static void Run(String ApiLoginID, String ApiTransactionKey)
+        public static void Run(string apiLoginId, string apiTransactionKey)
         {
             Console.WriteLine("Get A List of Subscriptions Sample");
 
@@ -18,9 +15,9 @@ namespace net.authorize.sample
 
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name = ApiLoginID,
+                name = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item = ApiTransactionKey,
+                Item = apiTransactionKey,
             };
 
             var request = new ARBGetSubscriptionListRequest {searchType = ARBGetSubscriptionListSearchTypeEnum.subscriptionActive };    // only gets active subscriptions
@@ -33,14 +30,15 @@ namespace net.authorize.sample
             //validate
             if (response != null && response.messages.resultCode == messageTypeEnum.Ok)
             {
-                if (response != null && response.messages.message != null && response.subscriptionDetails != null)
+                if (response.messages.message != null && response.subscriptionDetails != null)
                 {
                     Console.WriteLine("Success, " + response.totalNumInResultSet + " Results Returned ");
                 }
             }
             else
             {
-                Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
+                if (response != null)
+                    Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
             }
 
         }

@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
+using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Controllers.Bases;
 
-namespace net.authorize.sample
+namespace AuthorizeNET.CustomerProfiles
 {
     class CreateCustomerShippingAddress
     {
-        public static void Run(String ApiLoginID, String ApiTransactionKey)
+        public static void Run(string apiLoginId, string apiTransactionKey)
         {
             Console.WriteLine("CreateCustomerShippingAddress Sample");
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
             {
-                name            = ApiLoginID,
+                name            = apiLoginId,
                 ItemElementName = ItemChoiceType.transactionKey,
-                Item            = ApiTransactionKey,
+                Item            = apiTransactionKey,
             };
 
             customerAddressType officeAddress = new customerAddressType();
@@ -41,14 +40,15 @@ namespace net.authorize.sample
             createCustomerShippingAddressResponse response = controller.GetApiResponse(); 
             if (response != null && response.messages.resultCode == messageTypeEnum.Ok)
             {
-                if (response != null && response.messages.message != null)
+                if (response.messages.message != null)
                 {
                     Console.WriteLine("Success, customerAddressId : " + response.customerAddressId);
                 }
             }
             else
             {
-                Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
+                if (response != null)
+                    Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
             }
 
         }
